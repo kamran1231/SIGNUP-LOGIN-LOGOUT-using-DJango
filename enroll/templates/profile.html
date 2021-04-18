@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+
+<div class="container">
+    <div class="row mt-5">
+        <h3 class="text-center alert alert-danger">Profile Page</h3>
+        <div class="col-sm-6 offset-3">
+
+            <h2>Profile page</h2>
+            <h2 style="text-transform: capitalize;">Welcome {{name}}</h2>
+            <a href="{% url 'signup' %}" class="btn btn-success" >Signup</a>
+            <a href="{% url 'logout' %}" class="btn btn-danger" >logout</a>
+
+            {% if messages %} {% for mes in messages %}
+
+      <small {% if mes.tags %} class="{{mes.tags}} {% endif %}">{{mes}}</small>
+      {% endfor %} {% endif %}
+            
+              
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

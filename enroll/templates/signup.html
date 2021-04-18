@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!-- <style>
+    .success{
+        color:green;
+        font-size:medium;
+    }
+</style> -->
+
+<div class="container">
+    <div class="row mt-5">
+        <h3 class="text-center alert alert-danger">Signup Page</h3>
+        <div class="col-sm-6 offset-3">
+            <form action="" method="POST">
+                {% csrf_token %} {% for fm in form %} {{fm.label_tag}} {{fm}}
+                {{fm.errors|striptags}}<br>
+              
+                {% endfor %}
+              
+                <input type="submit" value="submit" class="btn btn-primary" />
+                <a href="{% url 'login' %}" class="btn btn-success" style="float: right">login</a>
+              </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+{% if messages %} {% for mes in messages %}
+
+<small {% if mes.tags %} class="{{mes.tags}}" {% endif%}>{{mes}}</small>
+
+{% endfor %} {% endif %} 
+
+{% endblock content %}
