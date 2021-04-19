@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponseRedirect
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import SignupForm,LoginForm,ChangePassword,ForgetPassword
+from .forms import SignupForm,LoginForm,ChangePassword,ForgetPassword,EditUserProfileForm
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
@@ -44,7 +44,14 @@ def user_login(request):
 
 def user_profile(request):
     if request.user.is_authenticated:
-        return render(request,'profile.html',{'name':request.user})
+        if request.method == 'POST':
+            fm = EditUserProfileForm(instance=request.user,data=request.POST)
+            if fm.is_valid():
+                messages.success(request,'User Details Update Successfully!!')
+                fm.save()
+        else:
+            fm = EditUserProfileForm(instance=request.user)
+        return render(request,'profile.html',{'name':request.user,'form':fm})
     else:
         return redirect('login')
 
