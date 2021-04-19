@@ -11,6 +11,8 @@
             <h2 style="text-transform: capitalize;">Welcome {{name}}</h2>
             <a href="{% url 'signup' %}" class="btn btn-success" >Signup</a>
             <a href="{% url 'logout' %}" class="btn btn-danger" >logout</a>
+            <a href="{% url 'changepsw' %}" class="btn btn-danger" >Change Password</a>
+            <a href="{% url 'forgetpsw' %}" class="btn btn-danger" >Forget Password</a>
 
             {% if messages %} {% for mes in messages %}
 

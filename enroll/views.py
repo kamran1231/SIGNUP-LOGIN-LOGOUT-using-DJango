@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect,HttpResponseRedirect
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import SignupForm,LoginForm
+from .forms import SignupForm,LoginForm,ChangePassword,ForgetPassword
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 
 # Create your views here.
 
@@ -52,3 +52,47 @@ def user_profile(request):
 def user_logout(request):
     logout(request)
     return redirect('signup')
+
+
+#Change Password With OLD password
+def change_password(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            fm = ChangePassword(user=request.user,data=request.POST)
+            print(fm)
+            if fm.is_valid():
+                fm.save()
+                #if you want to redirect your homepage
+                update_session_auth_hash(request,fm.user)
+                messages.success(request,'Password has been changed')
+                return redirect('profile')
+
+        else:
+
+            fm = ChangePassword(user=request.user)
+        return render(request,'changepsw.html',{'form':fm})
+    else:
+        return redirect('login')
+
+
+
+#Change Password without Old Password
+
+def forget_password(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            fm = ForgetPassword(user=request.user,data=request.POST)
+            if fm.is_valid():
+                fm.save()
+                update_session_auth_hash(request,fm.user)
+                messages.success(request, 'Your password has been changed')
+                return redirect('profile')
+        else:
+            fm = ForgetPassword(user=request.user)
+        return render(request,'forgetpsw.html',{'form':fm})
+    else:
+        return redirect('login')
+
+
+
+
