@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+
+<div class="container">
+    <div class="row mt-5">
+        <h3 class="text-center alert alert-danger">Profile Page</h3>
+        <div class="col-sm-6 offset-3">
+
+    
+            <form action="" method="post">
+                <!-- {% csrf_token %} -->
+
+                {{form.as_p}}
+
+                
+                <a href="{% url 'profile' %}" class="btn btn-success">profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-success">logout</a>
+
+
+            </form>
+
+            
+            <!-- <a href="{% url 'signup' %}" class="btn btn-success" >Signup</a> -->
+            
+
+        
+            
+              
+        </div>
+    </div>
+</div>
+<br>
+
+
+
+{% endblock content %}
